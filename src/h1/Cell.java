@@ -39,7 +39,8 @@ public class Cell {
 
 						if (neighborRow >= 0 && neighborRow < maxRows && neighborCol <= 0 && neighborCol < maxCols) {
 							if (gridArray[neighborRow][neighborCol].alive == true) {
-								numLivingNeighbors += 1;
+								row.numLivingNeighbors += 1;
+								// Hier??????????? this.numLivingNeighbors = row.numLivingNeighbors;
 							}
 
 						}
@@ -48,11 +49,25 @@ public class Cell {
 				}
 
 			}
+			decideNextStatus();
 		}
 
 	}
 
 	private void decideNextStatus() {
+		if (alive) {
+			if (numLivingNeighbors == 2 || numLivingNeighbors == 3) {
+				setAliveNextGen(true);
+			} else {
+				setAliveNextGen(false);
+			}
+		} else {
+			if (numLivingNeighbors == 3) {
+				setAliveNextGen(true);
+			} else {
+				setAliveNextGen(false);
+			}
+		}
 
 	}
 

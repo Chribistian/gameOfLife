@@ -19,33 +19,39 @@ public class Grid {
 	// und er bekommt die Gittergröße des Spielfeldes
 
 	public Grid(Cell[] cells, int gridRows, int gridCols) {
-		Cell[][] gridArray = new Cell[gridRows][gridCols];
-		this.gridArray = gridArray;
-		// gridArray, die Spielfeldgröße wird festgelegt
+//		if (cells != null) {
+			this.gridArray = new Cell[gridRows][gridCols];
 
-		// für jedes leere Feld wird ein entsprechendes Cell objekt erzeugt.
-		for (int i = 0; i < gridRows; i++) {
-			for (int j = 0; j < gridCols; j++) {
-				gridArray[i][j] = new Cell(i, j);
-			}
-		}
-		// Zellen in Cells werden Lebendig gesetzt.
-		for (Cell aCell : cells) {
+			// gridArray, die Spielfeldgröße wird festgelegt
 
-			int a = aCell.getIndexRow();
-			int b = aCell.getIndexCol();
-			if (a >= gridRows || b >= gridCols) {
-				continue;
+			// für jedes leere Feld wird ein entsprechendes Cell objekt erzeugt.
+			for (int i = 0; i < gridRows; i++) {
+				for (int j = 0; j < gridCols; j++) {
+					this.gridArray[i][j] = new Cell(i, j);
+				}
 			}
-			gridArray[a][b].setAlive(true);
-		}
-		// alternativ aber weniger übersichtlich:
+			// Zellen in Cells werden Lebendig gesetzt.
+			for (Cell aCell : cells) {
+
+				int a = aCell.getIndexRow();
+				int b = aCell.getIndexCol();
+				if (a >= gridRows || b >= gridCols) {
+					continue;
+				}
+				this.gridArray[a][b].setAlive(true);
+			}
+			// alternativ aber weniger übersichtlich:
 //		for (Cell i : cells) {
 //			gridArray[i.getIndexRow()][i.getIndexCol()].setAlive(true);
+//		}
+//		}else {System.out.print("Cells ist leer oder Null");
 //		}
 	}
 
 	public void computeNextGen() {
+		int maxRows = gridArray.length;
+		int maxCols = gridArray[0].length;
+		Grid [][] gridNextGen = new Grid [maxRows][maxCols];
 
 	}
 }

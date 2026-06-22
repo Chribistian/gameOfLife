@@ -10,7 +10,9 @@ public class H1_main {
 		
 		Cell [] livingThings = {Co1,Co2,Co3};
 		
+		// (Array with living, Cells, grid 4x4)
 		Grid testGrid = new Grid(livingThings, 4,4);
+		
 		
 		
 		
