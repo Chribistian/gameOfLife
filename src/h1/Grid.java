@@ -78,6 +78,7 @@ public class Grid {
 				continue;
 			}
 			computeNextGen();
+			
 		}
 	
 
@@ -97,7 +98,20 @@ public class Grid {
 				}
 			}
 		}	
-		return Arrays.deepToString(finish);
+		
+		//Ursprünglich so:
+//		return Arrays.deepToString(finish);
+		
+		//KI genutzt für diesen Coder für bessere Lesbarkeit der Ergebnisse
+		StringBuilder sb = new StringBuilder();
+		for (int[] row : finish) {
+		    // Wandelt jede einzelne Zeile in Text um (z. B. "[1, 0, 1]")
+		    sb.append(Arrays.toString(row)).append("\n");
+		}
+
+		return sb.toString();
+		
+
 	}
 
 
