@@ -1,5 +1,7 @@
 package h1;
 
+import java.util.Arrays;
+
 public class Grid {
 
 	// Idee Arrays können auch objekte enthalten.
@@ -20,27 +22,27 @@ public class Grid {
 
 	public Grid(Cell[] cells, int gridRows, int gridCols) {
 //		if (cells != null) {
-			this.gridArray = new Cell[gridRows][gridCols];
+		this.gridArray = new Cell[gridRows][gridCols];
 
-			// gridArray, die Spielfeldgröße wird festgelegt
+		// gridArray, die Spielfeldgröße wird festgelegt
 
-			// für jedes leere Feld wird ein entsprechendes Cell objekt erzeugt.
-			for (int i = 0; i < gridRows; i++) {
-				for (int j = 0; j < gridCols; j++) {
-					this.gridArray[i][j] = new Cell(i, j);
-				}
+		// für jedes leere Feld wird ein entsprechendes Cell objekt erzeugt.
+		for (int i = 0; i < gridRows; i++) {
+			for (int j = 0; j < gridCols; j++) {
+				this.gridArray[i][j] = new Cell(i, j);
 			}
-			// Zellen in Cells werden Lebendig gesetzt.
-			for (Cell aCell : cells) {
+		}
+		// Zellen in Cells werden Lebendig gesetzt.
+		for (Cell aCell : cells) {
 
-				int a = aCell.getIndexRow();
-				int b = aCell.getIndexCol();
-				if (a >= gridRows || b >= gridCols) {
-					continue;
-				}
-				this.gridArray[a][b].setAlive(true);
+			int a = aCell.getIndexRow();
+			int b = aCell.getIndexCol();
+			if (a >= gridRows || b >= gridCols) {
+				continue;
 			}
-			// alternativ aber weniger übersichtlich:
+			this.gridArray[a][b].setAlive(true);
+		}
+		// alternativ aber weniger übersichtlich:
 //		for (Cell i : cells) {
 //			gridArray[i.getIndexRow()][i.getIndexCol()].setAlive(true);
 //		}
@@ -51,7 +53,54 @@ public class Grid {
 	public void computeNextGen() {
 		int maxRows = gridArray.length;
 		int maxCols = gridArray[0].length;
-		Grid [][] gridNextGen = new Grid [maxRows][maxCols];
+		Cell[][] gridGenBefore = new Cell[maxRows][maxCols];
+		gridGenBefore = gridArray;
+
+		for (Cell[] col : gridArray) {
+			for (Cell row : col) {
+				row.countLivingNeighbours(gridGenBefore);
+				if (row.isAliveNextGen()) {
+					row.setAlive(true);
+				} else {
+					row.setAlive(false);
+				}
+
+			}
+
+		}
 
 	}
+		
+	public void computeGeneration(int n) {
+
+		for (int i = 1; i <= n; i++) {
+			if (n == 0) {
+				continue;
+			}
+			computeNextGen();
+		}
+	
+
+	}
+
+	@Override
+	public String toString() {
+		int maxRows = gridArray.length;
+		int maxCols = gridArray[0].length;
+		int [][] finish = new int [maxRows][maxCols];
+		for (Cell[] col : gridArray) {
+			for (Cell row : col) {
+				if (row.isAlive()) {
+					finish [row.getIndexRow()][row.getIndexCol()] = 1;
+				}else {
+					finish [row.getIndexRow()][row.getIndexCol()] = 0;
+				}
+			}
+		}	
+		return Arrays.deepToString(finish);
+	}
+
+
+
+	
 }
